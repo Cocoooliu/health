@@ -3,23 +3,27 @@
 {% block title %}台科學餐商家列表{% endblock %}
 
 {% block body %}
+
 <main role="main">
-    <div class="jumbotron">
-        <div class="col-sm-8 mx-auto">
-             <!-- 加入圖片 -->
-             <img src="https://tse2.mm.bing.net/th?id=OIP.e0OZUGnSWSP-oWrn5u7fEgHaBm&pid=Api&P=0&h=180" alt="台科學餐封面"  class="img-fluid rounded shadow-lg mb-4" style="max-width: 100%; height: auto;">
-            <h1>歡迎來到台科學餐食譜網站</h1>
-            <p>這是一個台科學餐資訊網站，你可以在這搜尋各學餐的菜單及營養資訊，進行飲食管理，達成您一日健康所需！</p>
+    <div class="jumbotron jumbotron-fluid bg-gradient py-5">
+        <div class="container text-center text-white">
+            <!-- 加入圖片 -->
+            <img src="https://tse2.mm.bing.net/th?id=OIP.e0OZUGnSWSP-oWrn5u7fEgHaBm&pid=Api&P=0&h=180" 
+                 alt="台科學餐封面"  
+                 style="max-width: 80%; height: auto;">
             
-                    
-            <p>
-                <a class="btn btn-primary" href="{{ url_for('index') }}" role="button">立即查看學餐列表</a>
-            
-                <a class="btn btn-info" href="{{ url_for('nutrition_calculator') }}" role="button">計算營養需求</a>
-            </p>
+            <h1 class="display-3 font-weight-bold mb-3 "style="color: #000000;" >台科學餐商家列表</h1>
+            <p class="lead mb-4" style="color: #6c757d;">探索各學餐的菜單與營養資訊，讓您達成健康飲食的目標！</p>
+               
+            <div class="btn-group">
+                <a class="btn btn-lg btn-primary shadow-lg mx-2" href="{{ url_for('index') }}" role="button">查看學餐列表</a>
+                <a class="btn btn-lg btn-info shadow-lg mx-2" href="{{ url_for('nutrition_calculator') }}" role="button">計算營養需求</a>
+            </div>
         </div>
     </div>
 </main>
+
+
 <!-- 顯示每日營養需求 -->
 <div class="container mt-4">
     <h1 class="text-center mb-4">您的每日營養需求</h1>
@@ -28,18 +32,19 @@
     <div class="row">
         <!-- 左邊顯示資料 -->
         <div class="col-md-6">
-            <div class="card">
+            <div class="card shadow-sm">
+            
                 <div class="card-body">
-                    <h5 class="card-title">個人資訊</h5>
+                    <h5 class="card-title text-info">個人資訊</h5>
                     <ul>
                         <li>身高: <strong>{{ user_data.height }}</strong> 公分</li>
                         <li>體重: <strong>{{ user_data.weight }}</strong> 公斤</li>
                         <li>年齡: <strong>{{ user_data.age }}</strong> 歲</li>
                     </ul>
-                    <h5 class="card-title">總熱量需求 (TDEE)</h5>
+                    <h5 class="card-title text-info">總熱量需求 (TDEE)</h5>
                     <p class="card-text"><strong>{{ user_data.tdee }}</strong> 大卡</p>
                     <hr>
-                    <h5 class="card-title">營養分配</h5>
+                    <h5 class="card-title text-info">營養分配</h5>
                     <ul>
                         <li>碳水化合物: <strong>{{ user_data.carbs }}</strong> 克</li>
                         <li>蛋白質: <strong>{{ user_data.protein }}</strong> 克</li>
@@ -51,9 +56,9 @@
 
         <!-- 右邊顯示圓環圖 -->
         <div class="col-md-6">
-            <div class="card">
+            <div class="card shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title text-center">營養需求比例</h5>
+                    <h5 class="card-title text-center text-info">營養需求比例</h5>
                     <canvas id="nutritionChart" width="120" height="120"></canvas> <!-- 圓環圖大小調整 -->
                 </div>
             </div>
@@ -106,25 +111,212 @@
 
 <div class="container mt-4">
     <h1 class="mb-4 text-center">台科學餐商家列表</h1>
-    <a href="{{ url_for('add_canteen') }}" class="btn btn-success mb-4">新增商家</a>
+    <div class="d-flex justify-content-end mb-4">
+    <a href="{{ url_for('add_canteen') }}" class="btn btn-outline-secondary mb-4">新增商家</a>
+    </div>
 
+
+    
     <!-- 顯示商家列表 -->
 <div class="list-group">
     {% for canteen in canteens %}
         <div class="list-group-item d-flex justify-content-between align-items-center">
             <div>
-                <h5 class="mb-1">{{ canteen.name }}</h5>
-                <p class="mb-1">{{ canteen.description[:100] }}...</p>  <!-- 顯示商家介紹的前 100 字 -->
-            </div>
+                <h5 class="mb-1 text-info">{{ canteen.name }}</h5>
+                <p class="mb-1 text-muted">{{ canteen.description[:100] }}...</p>  <!-- 顯示商家介紹的前 100 字 -->            </div>
             <div class="btn-group">
                 <!-- 瀏覽商家按鈕 -->
                 <a href="{{ url_for('view_or_edit_canteen', canteen_id=canteen.id) }}" class="btn btn-warning mr-2">查看菜單</a>
                 <!-- 編輯商家按鈕 -->
-                <a href="{{ url_for('edit_canteen', canteen_id=canteen.id) }}" class="btn btn-light mr-2">編輯商家</a>
+                <a href="{{ url_for('edit_canteen', canteen_id=canteen.id) }}" class="btn btn-secondary mr-2">編輯商家</a>
 
             </div>
         </div>
     {% endfor %}
 </div>
+<div class="container mt-4">
+    <!-- 已點餐紀錄區塊 -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">已點餐紀錄</h4>
+        </div>
+        <div class="card-body">
+            {% if orders %}
+            <ul class="list-group">
+                {% for order in orders %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>菜單名稱: <strong>{{ order.menu.name }}</strong> x {{ order.quantity }} 份 - 熱量: {{ order.calories }}</strong> 大卡</span>
+                    <form action="{{ url_for('delete_order', order_id=order.id) }}" method="POST" class="mb-0">
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('您確定要刪除此點餐紀錄嗎？');">刪除</button>
+                    </form>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <div class="alert alert-warning text-center mb-0">
+                目前尚未點餐。
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- 剩餘營養需求區塊 -->
+    <div class="card">
+        <div class="card-header bg-success text-white">
+            <h4 class="mb-0">剩餘營養需求</h4>
+        </div>
+        <div class="card-body">
+            {% if remaining_nutrition %}
+            <ul class="list-group">
+                <li class="list-group-item">總熱量: <strong>{{ remaining_nutrition.calories }}</strong> 大卡</li>
+                <li class="list-group-item">碳水化合物: <strong>{{ remaining_nutrition.carbs }}</strong> 克</li>
+                <li class="list-group-item">蛋白質: <strong>{{ remaining_nutrition.protein }}</strong> 克</li>
+                <li class="list-group-item">脂肪: <strong>{{ remaining_nutrition.fat }}</strong> 克</li>
+            </ul>
+            {% else %}
+            <div class="alert alert-info text-center mb-0">
+                尚未計算您的營養需求。
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+    .list-group {
+        margin-top: 30px;
+        padding: 0 15px; /* 左右边距 */
+    }
+
+    .list-group-item {
+        background-color: #fff;  /* 背景色 */
+        border: 1px solid #ddd;  /* 边框颜色 */
+        border-radius: 10px;  /* 圆角 */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);  /* 阴影效果 */
+        margin-bottom: 20px;  /* 项目间距 */
+        padding: 15px 20px;  /* 内边距 */
+        transition: all 0.3s ease;  /* 鼠标悬停时的平滑过渡 */
+    }
+
+    .list-group-item:hover {
+        transform: translateY(-5px);  /* 鼠标悬停时轻微上移效果 */
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);  /* 鼠标悬停时更强的阴影 */
+        background-color: #f9fafb;  /* 鼠标悬停时背景色变化 */
+    }
+
+    .list-group-item h5 {
+        color: #007bff;  /* 标题字体颜色 */
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+    .list-group-item p {
+        font-size: 1rem;
+        color: #777;  /* 商家描述文字颜色 */
+        line-height: 1.6;
+        margin-bottom: 10px;  /* 描述与按钮之间的间距 */
+    }
+
+    .btn-group .btn {
+        border-radius: 25px;  /* 按钮圆角 */
+        padding: 8px 25px;  /* 按钮内边距 */
+        font-size: 1.1rem;
+        font-weight: 600;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .btn-warning {
+        background-color: #ffbc00;  /* 按钮背景色 */
+        color: white;
+        border: none;
+    }
+
+    .btn-warning:hover {
+        background-color: #f39c12;  /* 按钮悬停背景色 */
+        transform: scale(1.05);  /* 鼠标悬停时放大 */
+    }
+
+    .btn-light {
+        background-color: #f8f9fa;  /* 按钮背景色 */
+        color: #333;  /* 按钮文字颜色 */
+        border: 1px solid #ddd;
+    }
+
+    .btn-light:hover {
+        background-color: #e9ecef;  /* 按钮悬停背景色 */
+        transform: scale(1.05);  /* 鼠标悬停时放大 */
+    }
+</style>
+
+<style>
+    /* 卡片外观 */
+    .card {
+        border-radius: 15px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);  /* 卡片悬停效果 */
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);  /* 更强的阴影效果 */
+    }
+
+    /* 卡片标题 */
+    .card-header {
+        font-weight: 600;
+        border-radius: 15px 15px 0 0;
+        font-size: 1.2rem;
+    }
+
+    /* 卡片主体内容 */
+    .card-body {
+        padding: 1.5rem;
+    }
+
+    /* 列表样式 */
+    .list-group-item {
+        border-radius: 8px;
+        margin-bottom: 12px;
+        padding: 12px;
+        background-color: #f8f9fa;
+        transition: all 0.3s ease;
+    }
+
+    .list-group-item:hover {
+        background-color: #f1f3f5;  /* 悬停时背景颜色 */
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);  /* 鼠标悬停时添加阴影 */
+    }
+
+    /* 删除按钮 */
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+        border-color: #bd2130;
+        transform: scale(1.05);  /* 按钮放大效果 */
+    }
+
+    /* 警告提示 */
+    .alert {
+        border-radius: 8px;
+        font-size: 1.1rem;
+        margin-bottom: 0;
+    }
+
+    /* 栅格布局和对齐 */
+    .container {
+        padding: 0 20px;
+    }
+</style>
+
+
 
 {% endblock %}
+
+

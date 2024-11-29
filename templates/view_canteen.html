@@ -63,10 +63,16 @@
                             刪除
                         </button>
                     </form>
-                        <a href="{{ url_for('edit_menu', menu_id=menu.id) }}">編輯菜單</a>
+                    <!-- 使用按鈕樣式編輯菜單 -->
+                    <a href="{{ url_for('edit_menu', menu_id=menu.id) }}" class="btn btn-warning btn-sm">編輯菜單</a>
 
+                        <!-- 點餐表單 -->
+                    <form action="{{ url_for('place_order', menu_id=menu.id) }}" method="POST" class="d-inline">
+                        <input type="number" name="quantity" value="1" min="1" style="width: 50px; height: 30px; margin-left: 10px; margin-right: 5px;">
+                        <button type="submit" class="btn btn-sm btn-primary">點餐</button>
                     </form>
-                    
+
+                                   
                     
            
                 </div>

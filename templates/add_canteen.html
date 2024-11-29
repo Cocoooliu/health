@@ -3,24 +3,40 @@
 {% block title %}新增商家{% endblock %}
 
 {% block body %}
-<div class="container mt-4">
-    <h1 class="mb-4 text-center">新增商家</h1>
+<div class="container mt-5">
+    <!-- 標題 -->
+    <h1 class="text-center text-dark mb-5" style="font-family: 'Roboto', sans-serif; font-size: 2.5rem; font-weight: 700;">新增商家</h1>
 
     <form method="POST" action="{{ url_for('add_canteen') }}">
         <!-- 商家名稱欄位 -->
-        <div class="form-group">
-            <label for="name">商家名稱</label>
-            <input type="text" class="form-control" id="name" name="name" required>
+        <div class="form-group mb-4">
+            <label for="name" class="font-weight-bold text-info" style="font-family: 'Roboto', sans-serif;">商家名稱</label>
+            <input type="text" class="form-control form-control-lg" id="name" name="name" required placeholder="請輸入商家名稱" style="border-radius: 25px; font-size: 1.2rem;">
         </div>
 
         <!-- 商家介紹欄位 -->
-        <div class="form-group">
-            <label for="description">商家介紹</label>
-            <textarea class="form-control" id="description" name="description" rows="3" placeholder="簡短介紹商家的內容"></textarea>
+        <div class="form-group mb-4">
+            <label for="description" class="font-weight-bold text-info" style="font-family: 'Roboto', sans-serif;">商家介紹</label>
+            <textarea class="form-control form-control-lg" id="description" name="description" rows="4" placeholder="簡短介紹商家的內容" style="resize: none; border-radius: 25px; font-size: 1.2rem;"></textarea>
         </div>
 
         <!-- 提交按鈕 -->
-        <button type="submit" class="btn btn-primary">新增商家</button>
+        <div class="text-center mb-4">
+            <button type="submit" class="btn btn-primary btn-lg shadow-lg px-5 py-3" style="border-radius: 50px; font-size: 1.2rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease;">
+                新增商家
+            </button>
+        </div>
     </form>
+
+    <!-- 返回首頁按鈕 -->
+    <div class="text-center mt-4">
+        <a href="{{ url_for('index') }}" class="btn btn-secondary btn-lg shadow-lg px-5 py-3" style="border-radius: 50px; font-size: 1.2rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease;">
+            返回首頁
+        </a>
+    </div>
+
 </div>
+
+<!-- 引入 Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 {% endblock %}
