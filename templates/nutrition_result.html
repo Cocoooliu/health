@@ -1,26 +1,40 @@
 {% extends "base.html" %}
 
-{% block title %}營養需求結果{% endblock %}
+{% block title %}每日營養需求結果{% endblock %}
 
 {% block body %}
-<div class="container mt-4">
-    <h1 class="text-center mb-4">您的每日營養需求</h1>
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">總熱量需求 (TDEE)</h5>
-            <p class="card-text"><strong>{{ user_data.tdee }}</strong> 大卡</p>
+<div class="container mt-5">
+    <div class="text-center">
+        <h1 class="display-4 text-dark mb-4">您的每日營養需求</h1>
+    </div>
+    <div class="card shadow-lg border-0">
+        <div class="card-body p-4">
+            <h5 class="card-title text-success">總熱量需求 (TDEE)</h5>
+            <p class="card-text fs-4"><strong>{{ user_data.tdee }}</strong> 大卡</p>
             <hr>
-            <h5 class="card-title">營養分配</h5>
-            <ul>
-                <li>碳水化合物: <strong>{{ user_data.carbs }}</strong> 克</li>
-                <li>蛋白質: <strong>{{ user_data.protein }}</strong> 克</li>
-                <li>脂肪: <strong>{{ user_data.fat }}</strong> 克</li>
+            <h5 class="card-title text-info">營養分配</h5>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <span class="fw-bold">碳水化合物:</span> <span>{{ user_data.carbs }}</span> 克
+                </li>
+                <li class="list-group-item">
+                    <span class="fw-bold">蛋白質:</span> <span>{{ user_data.protein }}</span> 克
+                </li>
+                <li class="list-group-item">
+                    <span class="fw-bold">脂肪:</span> <span>{{ user_data.fat }}</span> 克
+                </li>
             </ul>
         </div>
     </div>
-    <a href="{{ url_for('nutrition_calculator') }}" class="btn btn-secondary mt-4">重新計算</a>
-     <!-- 返回商家列表 -->
-    <a href="{{ url_for('index') }}" class="btn btn-primary">查看商家列表</a>
+
+    <!-- 按鈕區域 -->
+    <div class="d-flex justify-content-center mt-5">
+        <a href="{{ url_for('nutrition_calculator') }}" class="btn btn-outline-secondary btn-lg mx-2">
+            <i class="bi bi-arrow-clockwise"></i> 重新計算
+        </a>
+        <a href="{{ url_for('index') }}" class="btn btn-primary btn-lg mx-2">
+            <i class="bi bi-list-ul"></i> 查看商家列表
+        </a>
     </div>
 </div>
 {% endblock %}
