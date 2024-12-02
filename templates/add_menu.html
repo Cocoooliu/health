@@ -33,18 +33,20 @@
                 <label for="nutrition_carbs">醣類 (g)</label>
                 <input type="number" class="form-control" step="0.01" id="nutrition_carbs" name="nutrition_carbs" placeholder="請輸入醣類含量" required>
             </div>
-            
+            <!-- 按鈕容器 -->
+            <div class="text-center mt-4">
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary" color: #fff>
+                    新增菜單
+                </button> 
+            </div>   
         </form>
 
-        <!-- 按鈕容器 -->
-        <div class="btn-container">
-            <!-- Submit Button -->
-            <button type="submit" class="btn btn-primary">
-                新增菜單
-            </button>
-
-            <!-- Return to Homepage Button -->
-            <a href="{{ url_for('view_or_edit_canteen', canteen_id=canteen.id) }}" class="btn btn-secondary">
+        
+            
+        
+        <div class="text-center mt-4">
+                <a href="{{ url_for('view_or_edit_canteen', canteen_id=canteen.id) }}" class="btn btn-secondary">
                 返回店家首頁
             </a>
         </div>
@@ -120,8 +122,10 @@
             box-shadow: 0 0 10px rgba(92, 107, 192, 0.3);
         }
 
+        
         /* Primary Button (新增菜單) */
         .btn-primary {
+            
             background: linear-gradient(135deg, #5c6bc0, #3f51b5);
             border: none;
             padding: 14px 30px;
@@ -130,6 +134,8 @@
             color: #fff;
             font-weight: 600;
             width: 100%;
+            text-align: center;
+            text-decoration: none;
             transition: all 0.3s ease-in-out;
         }
 

@@ -265,10 +265,14 @@ def add_menu(canteen_id):
             nutrition_carbs=nutrition_carbs,
             canteen_id=canteen.id
         )
-        db.session.add(new_menu)
-        db.session.commit()
-        
-        return redirect(url_for('view_or_edit_canteen', canteen_id=canteen.id))
+        try:
+            db.session.add(new_menu)
+            db.session.commit()
+            flash("菜單新增成功！", "success")
+            return redirect(url_for('view_or_edit_canteen', canteen_id=canteen.id))
+        except Exception as e:
+            db.session.rollback()
+            flash(f"新增失敗：{e}", "danger")
     
     return render_template('add_menu.html', canteen=canteen)
 
@@ -304,17 +308,27 @@ def delete_canteen(canteen_id):
     return redirect(url_for('index'))  # 刪除後返回商家列表頁
 
 
-# 刪除菜單品項
 @app.route('/menu/<int:menu_id>/delete', methods=['POST'])
 def delete_menu(menu_id):
     menu = Menu.query.get_or_404(menu_id)
+    try:
+        # 如果有相關記錄，手動刪除
+        related_orders = Order.query.filter_by(menu_id=menu.id).all()
+        for order in related_orders:
+            db.session.delete(order)
 
-    # 刪除菜單品項
-    db.session.delete(menu)
-    db.session.commit()
+        # 刪除菜單品項
+        db.session.delete(menu)
+        db.session.commit()
+        flash("菜單已成功刪除！", "success")
+    except Exception as e:
+        db.session.rollback()
+        flash("刪除失敗，請稍後再試！", "error")
+        app.logger.error(f"Error deleting menu: {e}")
 
     # 返回原商家的菜單頁面
     return redirect(url_for('view_or_edit_canteen', canteen_id=menu.canteen_id))
+
 
 @app.route('/nutrition_calculator', methods=['GET', 'POST'])
 @login_required
