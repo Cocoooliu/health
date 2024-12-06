@@ -28,6 +28,13 @@
         </div>
     </form>
 
+     <!-- 刪除商家按鈕 -->
+    <form method="POST" action="{{ url_for('delete_canteen', canteen_id=canteen.id) }}" class="text-center mb-4" onsubmit="return confirmDelete();">
+        <button type="submit" class="btn btn-danger btn-lg shadow-lg px-5 py-3" style="border-radius: 50px; font-size: 1.2rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease;">
+            刪除商家
+        </button>
+    </form>
+
     <!-- 返回首頁按鈕 -->
     <div class="text-center mt-4">
         <a href="{{ url_for('index') }}" class="btn btn-secondary btn-lg shadow-lg px-5 py-3" style="border-radius: 50px; font-size: 1.2rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease;">
@@ -39,4 +46,12 @@
 
 <!-- 引入 Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+<!-- JavaScript 確認刪除 -->
+<script>
+    function confirmDelete() {
+        return confirm("你確定要刪除此商家嗎？");
+    }
+</script>
+
 {% endblock %}
